@@ -1,0 +1,31 @@
+
+public abstract class Types 
+{
+	enum it {Input, Output, And};
+	protected final static int INPUTS_ONE = 1, INPUTS_TWO = 2, INPUTS_THREE = 3, OUTPUTS_ONE = 1, OUTPUTS_TWO = 2, OUTPUTS_THREE = 3;
+	
+	public abstract class Input
+	{
+		protected CurcuitObj Parent;
+		protected Types.Output connection;
+		public Input(CurcuitObj cd)
+		{
+			Parent = cd;
+		}
+	}
+	public abstract class Output
+	{
+		protected CurcuitObj Parent;
+		protected Types.Input[] connection;
+		protected boolean Value;
+		public Output(CurcuitObj cd)
+		{
+			Value = false;
+			Parent = cd;
+		}
+		public void setValue(boolean v)
+		{
+			Value = v;
+		}
+	}
+}

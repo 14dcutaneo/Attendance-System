@@ -1,0 +1,10 @@
+
+public class And extends Types.CurcuitObj
+{
+	public And()
+	{
+		super();
+		
+		
+	}
+}

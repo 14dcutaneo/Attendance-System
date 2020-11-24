@@ -1,0 +1,15 @@
+
+public class And extends Types.CurcuitObj
+{
+	public And()
+	{
+		
+	}
+
+	@Override
+	public void calculateOutput() 
+	{
+		
+		
+	}
+}

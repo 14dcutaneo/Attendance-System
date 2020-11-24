@@ -1,0 +1,14 @@
+import java.awt.image.BufferedImage;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
+public class DisplayPhotos extends JFrame
+{
+	public DisplayPhotos()
+	{
+		JLabel jl = new JLabel();
+		BufferedImage bi = new BufferedImage();
+		jl.setIcon(arg0);
+	}
+}

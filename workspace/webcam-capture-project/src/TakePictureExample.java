@@ -1,0 +1,31 @@
+import java.awt.Dimension;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+import com.github.sarxos.webcam.Webcam;
+
+
+public class TakePictureExample {
+
+	public static void main(String[] args) throws IOException {
+
+		// automatically open if webcam is closed
+		Webcam.setAutoOpenMode(true);
+
+		// get image
+		
+		Webcam wc = Webcam.getDefault();
+		
+		wc.setViewSize(new Dimension(1024,768));
+		
+		BufferedImage image = wc.getImage();
+		
+		//DisplayPhotos dp = new DisplayPhotos(image);
+		//dp.setVisible(true);
+
+		// save image to PNG file
+		ImageIO.write(image, "PNG", new File("C:\\Users\\Alan Decowski\\Desktop\\Testing\\test.png"));
+	}
+
+}

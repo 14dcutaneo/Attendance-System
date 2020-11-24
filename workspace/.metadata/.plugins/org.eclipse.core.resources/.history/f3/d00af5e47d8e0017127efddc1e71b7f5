@@ -1,0 +1,37 @@
+import java.awt.Dimension;
+import java.awt.image.BufferedImage;
+import com.github.sarxos.webcam.Webcam;
+public class Photo extends Thread
+{
+	long d;
+	Webcam wc;
+	BufferedImage latest;
+	DisplayPhotos ud;
+	public Photo(long delay, DisplayPhotos ud)
+	{
+		Webcam.setAutoOpenMode(true);
+		this.ud = ud;
+		wc = Webcam.getDefault();
+		wc.setViewSize(new Dimension(1024,768));
+	}
+	public void run()
+	{
+		while(true)
+		{
+			latest = wc.getImage();
+			System.out.println(latest);
+			ud.repaint();
+			System.out.println("Tick");
+			long sysStart = System.currentTimeMillis();
+			int i = 0;
+			while (System.currentTimeMillis() - sysStart < d)
+				System.out.println(System.currentTimeMillis() - sysStart);;
+			
+		}
+	}
+	public void waitDelay()
+	{
+		long sysStart = System.currentTimeMillis();
+		while (System.currentTimeMillis() - sysStart < d);
+	}
+}

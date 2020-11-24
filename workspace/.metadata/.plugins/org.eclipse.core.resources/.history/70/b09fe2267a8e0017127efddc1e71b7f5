@@ -1,0 +1,9 @@
+import javax.swing.JFrame;
+
+public class DisplayPhotos extends JFrame
+{
+	public DisplayPhotos()
+	{
+		
+	}
+}

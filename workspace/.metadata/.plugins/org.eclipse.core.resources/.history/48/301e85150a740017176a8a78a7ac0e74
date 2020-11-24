@@ -1,0 +1,63 @@
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+import java.awt.Font;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import java.awt.Color;
+import java.awt.SystemColor;
+import javax.swing.JTextPane;
+
+public class TO_BE_IMPLEMENTED_GroovyUpdateDialog extends JFrame {
+
+	private JPanel contentPane;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					TO_BE_IMPLEMENTED_GroovyUpdateDialog frame = new TO_BE_IMPLEMENTED_GroovyUpdateDialog();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public TO_BE_IMPLEMENTED_GroovyUpdateDialog() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 700, 400);
+		contentPane = new JPanel();
+		contentPane.setBackground(SystemColor.textHighlight);
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setLayout(new BorderLayout(0, 0));
+		setContentPane(contentPane);
+		
+		JPanel panel = new JPanel();
+		panel.setBackground(Color.ORANGE);
+		contentPane.add(panel, BorderLayout.CENTER);
+		panel.setLayout(null);
+		
+		JLabel lblListOfAvailable = new JLabel("Update Available!");
+		lblListOfAvailable.setFont(new Font("Tahoma", Font.PLAIN, 42));
+		lblListOfAvailable.setBounds(170, 5, 324, 51);
+		lblListOfAvailable.setForeground(Color.BLACK);
+		panel.add(lblListOfAvailable);
+		
+		JTextPane txtpnAnUpdateFor = new JTextPane();
+		txtpnAnUpdateFor.setText("An update for this program is now available for downlaod. To install, please check your email for a link to the shared google drive folder");
+		txtpnAnUpdateFor.setBounds(21, 79, 622, 219);
+		panel.add(txtpnAnUpdateFor);
+		
+		
+	}
+}

@@ -1,0 +1,15 @@
+
+public class And extends Types.CurcuitObj
+{
+	public And(String name)
+	{
+		super(Types.INPUTS_TWO, Types.OUTPUTS_ONE, Types.it.And, name);
+	}
+
+	@Override
+	public void calculateOutput() 
+	{
+		
+		
+	}
+}

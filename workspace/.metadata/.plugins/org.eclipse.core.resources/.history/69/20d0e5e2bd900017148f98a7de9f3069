@@ -1,0 +1,33 @@
+import Types.Input;
+import Types.Output;
+
+public abstract class CurcuitObj
+	{
+		Types.Input[] input;
+		Types.Output[] output;
+		Types.it Type;
+		String Name;
+		public CurcuitObj(int INPUTCOUNT, int OUTPUTCOUNT, Types.it t, String nombre)
+		{
+			Name = nombre;
+			Type = t;
+			input = new Types.Input[INPUTCOUNT];
+			output = new Types.Output[OUTPUTCOUNT];
+		}
+		public Types.CurcuitObj[][] returnConnections()
+		{
+			int len = 1;
+			if (output.length > input.length)
+				len = output.length;
+			else
+				len = input.length;
+			Types.CurcuitObj[][] ct = new Types.CurcuitObj[2][len];
+			for (int i = 0; i < input.length; i++)
+				ct[0][i] = input[i].Parent;
+			for (int i = 0; i < output.length; i++)
+				ct[0][i] = output[i].Parent;
+			
+			return ct;
+		}
+		//public abstract void calculateOutput();
+	}

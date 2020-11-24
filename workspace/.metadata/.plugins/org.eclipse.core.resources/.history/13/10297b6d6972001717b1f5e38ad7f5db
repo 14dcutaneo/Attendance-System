@@ -1,0 +1,192 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+
+public class StudentHandler 
+{
+	ArrayList<Student> ars = new ArrayList<Student>();
+	File stds = new File(System.getenv("APPDATA") + "/amdnc/saves/Students.amdnc");
+	
+	public StudentHandler() throws IOException
+	{
+		System.out.println("StudentHandler.Java public StudentHandler(): STHAND ONLINE"
+				+ "");
+		//new File("saves").mkdirs();
+		if (!stds.exists())
+		{
+			//stds.
+			stds.createNewFile();
+			System.out.println("StudentHandler.Java public StudentHandler(): First run detected. Force save stHand and pu");
+			this.Save();
+			Main.pu.save();
+		}
+		else
+		{
+			BufferedReader br = new BufferedReader(new FileReader(stds));
+			String str = "";
+			while ((str = br.readLine()) != null)
+			{
+				try
+				{
+					if (!str.equals(Main.secure.securityCheckpoint))
+					{
+					Student tmp = Student.getFromString(str);
+					if (tmp != null)
+						ars.add(tmp);
+					}
+				}
+				catch (Exception c)
+				{
+					System.out.println(c.getMessage());
+					System.err.println("StudentHandler.Java public StudentHandler(): Error decoding");
+				}
+			}
+		}
+		
+	}
+	
+	public Student[] getFromPartial(String str)
+	{
+		ArrayList<Student> stdsa = new ArrayList<Student>();
+		str =str.toLowerCase();
+		String[] words = getwords(str);
+		
+		if (words.length == 2)
+		{
+			for (int i = 0; i < ars.size(); i++)
+			{
+				String str1 = words[0];
+				String str2 = words[1];
+				if(
+						(ars.get(i).lFirst.toLowerCase().startsWith(str1) && ars.get(i).lLast.toLowerCase().startsWith(str2))
+						||
+						(ars.get(i).lFirst.toLowerCase().startsWith(str2) && ars.get(i).lLast.toLowerCase().startsWith(str1))
+						)
+					if (!stdsa.contains(ars.get(i)))
+						stdsa.add(ars.get(i));
+			}
+		}
+		else
+			for (String str1:words)
+				for (int i = 0; i < ars.size(); i++)
+				{
+					if (ars.get(i).lFirst.toLowerCase().startsWith(str1) || ars.get(i).lLast.toLowerCase().startsWith(str1))
+						if (!stdsa.contains(ars.get(i)))
+							stdsa.add(ars.get(i));
+				}
+			
+		Student[] st = new Student[stdsa.size()];
+		for (int i = 0; i < stdsa.size(); i++)
+		{
+			st[i] = stdsa.get(i);
+		}
+		return st;
+	}
+	
+	public static String[] getwords(String str)
+	{
+		ArrayList<String> ar = new ArrayList<>();
+		String runner = "";
+		for (int i = 0; i < str.length(); i++)
+		{
+			if (str.charAt(i) == ' ')
+			{
+				ar.add(runner);
+				runner = "";
+			}
+			else
+				runner += str.charAt(i);
+		}
+		ar.add(runner);
+		String[] l = new String[ar.size()];
+		for (int i = 0; i < ar.size(); i++ )
+		{
+			l[i] = ar.get(i);
+		}
+		return l;
+	}
+	
+	public void addStudent(Student std) throws IOException
+	{
+		ars.add(std);
+		Save();
+	}
+	
+	public void delStudent(long ID)
+	{
+		for (int i = 0; i < ars.size(); i++)
+		{
+			if (ars.get(i).assignmentID == ID)
+			{
+				ars.remove(i);
+				return;
+			}
+		}
+	}
+	
+	public Student getStudent(long ID)
+	{
+		for (int i = 0; i < ars.size(); i++)
+		{
+			if (ars.get(i).assignmentID == ID)
+			{
+				System.out.println("StudentHandler.java public Student getStudent(long ID): Returning student");
+				return ars.get(i);
+			}
+		}
+		System.out.println("Returning null");
+		return null;
+	}
+	
+	public Student getStudent(String firstLast)
+	{
+		for (int i = 0; i < ars.size(); i++)
+		{
+			if (firstLast.equalsIgnoreCase(
+					ars.get(i).lFirst + " " + 
+							ars.get(i).lLast))
+				return ars.get(i);
+		}
+		return null;
+	}
+	
+	public long getFreeIDNumber()
+	{
+		long l = (long) (Math.random() * Integer.MAX_VALUE);
+		
+		while (getStudent(l) != null)
+		{
+			l = (long) (Math.random() * Integer.MAX_VALUE);
+		}
+		
+		return l;
+	}
+	
+	public Student[] getAllStudents()
+	{
+		Student[] arr = new Student[ars.size()];
+		for (int i = 0; i < ars.size(); i ++)
+		{
+			arr[i] = (Student) ars.get(i);
+		}
+		return arr;
+	}
+	
+	public void Save() throws IOException
+	{
+		BufferedWriter bw = new BufferedWriter(new FileWriter(stds));
+		for (int i = 0; i<ars.size(); i++)
+		{
+			System.out.println("StudentHandler Public void Save(): Saving: " + ars.get(i).toString());
+			bw.write(ars.get(i).toString());
+			bw.newLine();
+			bw.flush();
+		}
+		bw.write(Main.secure.securityCheckpoint);
+		bw.flush();
+	}
+}

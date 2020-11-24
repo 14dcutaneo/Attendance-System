@@ -1,0 +1,158 @@
+import java.awt.BorderLayout;
+import java.awt.Button;
+import java.awt.EventQueue;
+import java.awt.Font;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import java.awt.Panel;
+import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.awt.Color;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
+import java.awt.List;
+
+public class puGUI extends JFrame {
+
+	private JPanel contentPane;
+	List list;
+
+
+	/**
+	 * Create the frame.
+	 */
+	private void respring()
+	{
+		new puGUI().setVisible(true);
+		this.dispose();
+	}
+	
+	public puGUI() {
+		setIconImage(Main.A);
+		setTitle("FB Marching Band Attendence");
+		setBounds(100, 100, 920, 700);
+		
+		int posX = Main.x/2 - (920/2);
+		int posY = Main.y/2 - (700/2);
+		
+		setBounds(posX,posY,920,700);
+		
+		contentPane = new JPanel();
+		contentPane.setBackground(SystemColor.textHighlight);
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setLayout(new BorderLayout(0, 0));
+		setContentPane(contentPane);
+		
+		Panel panel = new Panel();
+		panel.setBackground(Color.ORANGE);
+		contentPane.add(panel, BorderLayout.CENTER);
+		panel.setLayout(null);
+		
+		JLabel lblPowerUsers = new JLabel("Power Users");
+		lblPowerUsers.setForeground(Color.BLACK);
+		lblPowerUsers.setHorizontalAlignment(SwingConstants.CENTER);
+		lblPowerUsers.setBounds(21, 21, 842, 51);
+		lblPowerUsers.setFont(new Font("Tahoma", Font.PLAIN, 42));;
+		panel.add(lblPowerUsers);
+		
+		Button button = new Button("New");
+		button.setForeground(Color.BLACK);
+		button.setFont(new Font("Tahoma", Font.PLAIN, 42));
+		button.setBackground(SystemColor.textHighlight);
+		puGUI hold = this;
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				new AddPower(hold).setVisible(true);
+			}
+		});
+		button.setBounds(701, 553, 173, 56);
+		panel.add(button);
+		
+		list = new List();
+		
+		String[] s = Main.pu.getList();
+		
+		list.add("AMDNC built in Override account");
+		
+		for(String l: s)
+		{
+			list.add(l);
+		}
+		
+		list.setFont(new Font("Tahoma", Font.BOLD, 30));
+		list.setBounds(10, 78, 864, 468);
+		list.setForeground(Color.BLACK);
+		panel.add(list);
+		
+		Button button_2 = new Button("Delete Selection");
+		button_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					if (list.getSelectedIndex() == 0)
+					{
+						JOptionPane.showMessageDialog(null, "We're sorry. This account may not be deleted as it is a built in recovery account.");
+					}
+					Main.pu.remove(list.getSelectedItem());
+					respring();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					new Errors.AMDNCError(
+							Errors.EHAND.Type.THROWN, //TYPE
+									"puGUI.java "//CLASS
+										+ "puGUI() "//METHOD
+										+ "Delete Selection Button"//<<EXTRA>>
+									, "Unable to save Power Users to file." //DESCRIPTION
+										);
+				}
+			}
+		});
+		button_2.setForeground(Color.BLACK);
+		button_2.setFont(new Font("Tahoma", Font.PLAIN, 42));
+		button_2.setBackground(SystemColor.textHighlight);
+		button_2.setBounds(358, 553, 337, 56);
+		panel.add(button_2);
+		
+		Button button_3 = new Button("Change Selection");
+		button_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					if (list.getSelectedIndex() == 0)
+					{
+						JOptionPane.showMessageDialog(null, "We're sorry. This account may not be changed as it is a built in recovery account.");
+					}
+					else
+					{
+						if (list.getSelectedIndex() == -1)
+							return;
+						Main.pu.remove(list.getSelectedItem());
+						AddPower ap = new AddPower(hold);
+						ap.btnAddStudent.setText("Change");
+						ap.textField.setEnabled(false);
+						ap.textField.setText(list.getSelectedItem());
+						ap.lblNewLabel.setText("Change power user");
+						ap.setVisible(true);
+					}
+				}
+				catch (Exception x){new Errors.AMDNCError(
+						Errors.EHAND.Type.THROWN, //TYPE
+						"puGUI.java "//CLASS
+							+ "puGUI() "//METHOD
+							+ "Button: Change selection"//<<EXTRA>>
+						, "Unable to save PowerUsers to file" //DESCRIPTION
+							);}
+			}
+		});
+		button_3.setForeground(Color.BLACK);
+		button_3.setFont(new Font("Tahoma", Font.PLAIN, 42));
+		button_3.setBackground(SystemColor.textHighlight);
+		button_3.setBounds(10, 553, 342, 56);
+		panel.add(button_3);
+	}
+}
+	

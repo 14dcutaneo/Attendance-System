@@ -1,0 +1,89 @@
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+import java.awt.Font;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import java.awt.Color;
+import java.awt.Desktop;  //New Import
+import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.net.URL; //New Import
+
+import javax.swing.JTextPane;
+import javax.swing.JButton;
+
+public class TO_BE_IMPLEMENTED_GroovyUpdateDialog extends JFrame {
+
+	private JPanel contentPane;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					TO_BE_IMPLEMENTED_GroovyUpdateDialog frame = new TO_BE_IMPLEMENTED_GroovyUpdateDialog();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public TO_BE_IMPLEMENTED_GroovyUpdateDialog() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 700, 400);
+		contentPane = new JPanel();
+		contentPane.setBackground(SystemColor.textHighlight);
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setLayout(new BorderLayout(0, 0));
+		setContentPane(contentPane);
+		
+		JPanel panel = new JPanel();
+		panel.setBackground(Color.ORANGE);
+		contentPane.add(panel, BorderLayout.CENTER);
+		panel.setLayout(null);
+		
+		JLabel lblListOfAvailable = new JLabel("Update Available!");
+		lblListOfAvailable.setFont(new Font("Tahoma", Font.PLAIN, 42));
+		lblListOfAvailable.setBounds(170, 5, 324, 51);
+		lblListOfAvailable.setForeground(Color.RED);
+		panel.add(lblListOfAvailable);
+		
+		JTextPane txtpnAnUpdateFor = new JTextPane();
+		txtpnAnUpdateFor.setEditable(false);
+		txtpnAnUpdateFor.setFont(new Font("Tahoma", Font.PLAIN, 32));
+		txtpnAnUpdateFor.setForeground(Color.BLACK);
+		txtpnAnUpdateFor.setBackground(Color.ORANGE);
+		txtpnAnUpdateFor.setText("An update for this program is now available for downlaod. Click on \"Update Now\" to open the shared google drive folder, and downlad the latest version.");
+		txtpnAnUpdateFor.setBounds(21, 77, 622, 169);
+		panel.add(txtpnAnUpdateFor);
+		
+		JButton btnUpdateNow = new JButton("Update Now");
+		btnUpdateNow.setFont(new Font("Tahoma", Font.PLAIN, 42));
+		btnUpdateNow.setBackground(SystemColor.textHighlight);
+		btnUpdateNow.setForeground(Color.BLACK);
+		btnUpdateNow.setBounds(158, 247, 324, 51);
+		btnUpdateNow.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				try {
+				    Desktop.getDesktop().browse(new URL("https://doc-14-2c-docs.googleusercontent.com/docs/securesc/ha0ro937gcuc7l7deffksulhg5h7mbp1/braav1qf2t3n6mkjh38ckqfqh09pp9oa/1501293600000/11490631773839149880/*/0B3j7rDuhKqeAZzBPNGxoX0xobk0?e=download").toURI());
+				} catch (Exception e) {}
+			}
+		});	
+		panel.add(btnUpdateNow);
+		
+		
+	}
+}

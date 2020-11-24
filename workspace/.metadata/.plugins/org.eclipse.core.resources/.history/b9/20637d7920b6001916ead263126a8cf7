@@ -1,0 +1,69 @@
+
+public class Tes 
+{
+	public static void main(String[] args)
+	{
+		System.out.println(toBin("Hello!"));
+		System.out.println(toBin("Hello!").length()%8);
+		addCheck(toBin("Hello world!!"));
+		addCheck("1234568");
+		/*
+		for (int i = (int)'!'; i <= (int)'!'; i++ )
+		{
+			String str = "" + (char) i;
+			System.out.println(toBin(str) + " " + toBin(str).length());
+		}*/
+		
+	}
+	
+	public static String addCheck(String str)
+	{
+		//Check if valid binary string:
+		if ((str.length())%8 != 0)
+		{
+			new Errors.AMDNCError(Errors.EHAND.Type.OBJ_INCAPABLE, "public static String addCheck(String str)", "The passed string is not divisble by 8.", "Binary strings should be divisible by 8 and only contain ones and zeros.");
+			return null;
+		}
+		for (int i = 0; i< str.length(); i++)
+		{
+			if (str.charAt(i) != '0' && str.charAt(i) != '1')
+			{
+				new Errors.AMDNCError(Errors.EHAND.Type.OBJ_INCAPABLE, "public static String addCheck(String str)", "The passed string is not a valid binary number.", "Binary strings should be divisible by 8 and only contain ones and zeros.");
+				return null;
+			}
+		}
+		
+		for (int i = 0; i < str.length(); i += 8)
+		{
+			boolean parody = false;
+			for (int i1 = 0; i1 < 8; i1++)
+			{
+				System.out.print(str.charAt(i+i1));
+				if (str.charAt(i+i1) == '1')
+				{
+					parody = !parody;
+				}
+				System.out.print(" " + (parody ? "1" : "0"));
+			}
+			System.out.println();
+			
+		}
+		
+		return null;
+	}
+	
+	public static String toBin(String str)
+	{
+		String bin = "";
+		for (int i = 0; i < str.length(); i++)
+		{
+			String T = Integer.toBinaryString(str.charAt(i));
+			while (T.length() < 8)
+			{
+				T = "0" + T;
+			}
+			bin += T;
+		}
+		return bin;
+	}
+}

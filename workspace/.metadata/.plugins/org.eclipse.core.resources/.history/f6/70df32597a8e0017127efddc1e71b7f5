@@ -1,0 +1,9 @@
+import java.awt.image.BufferedImage;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
+public class DisplayPhotos extends Canvas
+{
+	
+}

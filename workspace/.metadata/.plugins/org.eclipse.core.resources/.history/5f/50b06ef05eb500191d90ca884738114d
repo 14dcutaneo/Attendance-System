@@ -1,0 +1,184 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
+public class Security 
+{
+
+	String gPass;
+	String secQU;
+	String secAN;
+	private boolean secure = true;
+	String securityCheckpoint;
+	
+	public Security(boolean over) throws IOException
+	{
+		//Line 1: GPassword
+				//Line 2: Security question
+				//Line 3: Security answer
+				//Line 4: Security check
+		
+		//////////////////////////////SYSTEM INTEGTRETY CHECK
+		
+		File f = new File(System.getenv("APPDATA") + "/amdnc/saves/secure.amdnc");
+		File f1 = new File(System.getenv("APPDATA") + "/amdnc/saves/cleanup");
+		if (new File(System.getenv("APPDATA") + "/amdnc/saves").isDirectory() && !f.exists() && over == false)
+		{
+			PrintServ.print("INSECURE");
+			secure = false;
+			return;
+		}
+		
+		new File(System.getenv("APPDATA") + "/amdnc/saves").mkdirs();
+		
+		f1.mkdirs();
+		System.out.println(f1);
+		for (
+				File f2: 
+					f1.listFiles())
+			f2.delete();
+		
+		gPass = "";
+		secQU = "";
+		secAN = "";
+		
+		
+		if (!f.exists())
+			try {
+				f.createNewFile();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				new Errors.AMDNCError(
+						Errors.EHAND.Type.FATAL, //TYPE
+								"Security.java "//CLASS
+									+ "Security() "//METHOD
+									+ ""//<<EXTRA>>
+								, "Unable to create new file" //DESCRIPTION
+									);
+			}
+		
+		BufferedReader br = new BufferedReader(new FileReader(f));
+		
+		String read = "";
+		
+		read = br.readLine();
+		
+		if (read != null)
+		{
+			gPass = read;
+		}
+		
+		read = br.readLine();
+		
+		if (read != null)
+		{
+			secQU = read;
+		}
+		
+		read = br.readLine();
+		
+		if (read != null)
+		{
+			secAN = read;
+		}
+		
+		read = br.readLine();
+		
+		if (read != null)
+		{
+			securityCheckpoint = read;
+			
+			File dir = new File(System.getenv("APPDATA") + "/amdnc/saves");
+			
+			File[] dirL = dir.listFiles();
+			
+			
+			
+			for (File s : dirL)
+			{
+				if (!s.isDirectory())
+				{
+					br = new BufferedReader(new FileReader(s));
+					String r = "";
+					boolean fileSecure = false;
+					while ((r=br.readLine()) != null)
+					{
+						if (r.equals(securityCheckpoint))
+							fileSecure = true;
+					}
+					if (!fileSecure)
+					{
+						secure = false;
+						return;
+					}
+					br.close();
+				}
+			}
+			
+			
+		}
+		else
+		{
+			securityCheckpoint = getNewPoint();
+			save();
+		}
+		if (gPass.equals("") || gPass == null)
+		{
+			gPass = Main.pu.encrypt("FreeholdColonials");
+			save();
+		}
+	}
+	
+	public String getNewPoint()
+	{
+		return "S" + ((int)(Math.random()*100000)) + "AMD" + ((int) (Math.random()*20031)) + "NC";
+	}
+	
+	public boolean getSecurityStatus()
+	{
+		return secure;
+	}
+	
+	//Line 1: GPassword
+			//Line 2: Security question
+			//Line 3: Security answer
+			//Line 4: Security check
+	
+	
+	public void save() throws IOException
+	{
+		File f = new File(System.getenv("APPDATA") + "/amdnc/saves/secure.amdnc");
+		BufferedWriter bw = new BufferedWriter(new FileWriter(f));
+		//PrintServ.print(gPass);
+		//PrintServ.print(secQU);
+		//PrintServ.print(secAN);
+		//PrintServ.print(securityCheckpoint);
+		bw.write(gPass);
+		bw.newLine();
+		bw.write(secQU);
+		bw.newLine();
+		bw.write(secAN);
+		bw.newLine();
+		bw.write(securityCheckpoint);
+		bw.flush();
+		bw.close();
+	}
+	
+	public boolean log(String str)
+	{
+		if (gPass.equals("") || gPass == null)
+			return str.equals("FreeholdColonials");
+		else
+			return PowerUsers.encrypt(str).equals(gPass);
+	}
+	
+	public void resetPassword()
+	{
+		
+	}
+	
+}

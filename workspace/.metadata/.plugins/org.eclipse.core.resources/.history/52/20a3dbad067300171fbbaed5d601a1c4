@@ -1,0 +1,114 @@
+import java.awt.BorderLayout;
+import java.awt.Button;
+import java.awt.Color;
+import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.List;
+import java.awt.Panel;
+import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
+
+public class TEMPORARY extends JFrame {
+
+	private JPanel contentPane;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					TEMPORARY frame = new TEMPORARY();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public TEMPORARY() {
+		setIconImage(Main.ico);
+		setTitle("FB Marching Band Attendence");
+		setBounds(100, 100, 920, 700);
+		contentPane = new JPanel();
+		contentPane.setBackground(SystemColor.textHighlight);
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setLayout(new BorderLayout(0, 0));
+		setContentPane(contentPane);
+		
+		Panel panel = new Panel();
+		panel.setBackground(Color.ORANGE);
+		contentPane.add(panel, BorderLayout.CENTER);
+		panel.setLayout(null);
+		
+		JLabel lblPowerUsers = new JLabel("Power Users");
+		lblPowerUsers.setForeground(Color.BLACK);
+		lblPowerUsers.setHorizontalAlignment(SwingConstants.CENTER);
+		lblPowerUsers.setBounds(21, 21, 842, 51);
+		lblPowerUsers.setFont(new Font("Tahoma", Font.PLAIN, 42));;
+		panel.add(lblPowerUsers);
+		
+		Button button = new Button("New...");
+		button.setForeground(Color.BLACK);
+		button.setFont(new Font("Tahoma", Font.PLAIN, 42));
+		button.setBackground(SystemColor.textHighlight);
+		
+		button.setBounds(626, 553, 248, 56);
+		panel.add(button);
+		
+		List list = new List();
+		
+		String[] s = Main.pu.getList();
+		
+		list.add("AMDNC built in Override account");
+		
+		for(String l: s)
+		{
+			list.add(l);
+		}
+		
+		list.setFont(new Font("Tahoma", Font.BOLD, 30));
+		list.setBounds(10, 78, 864, 468);
+		list.setForeground(Color.BLACK);
+		panel.add(list);
+		
+		Button button_2 = new Button("Delete Select");
+		button_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+			}
+		});
+		button_2.setForeground(Color.BLACK);
+		button_2.setFont(new Font("Tahoma", Font.PLAIN, 42));
+		button_2.setBackground(SystemColor.textHighlight);
+		button_2.setBounds(358, 553, 262, 56);
+		panel.add(button_2);
+		
+		Button button_3 = new Button("Change Select");
+		button_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				}
+				
+		});
+		button_3.setForeground(Color.BLACK);
+		button_3.setFont(new Font("Tahoma", Font.PLAIN, 42));
+		button_3.setBackground(SystemColor.textHighlight);
+		button_3.setBounds(158, 553, 262, 56);
+		panel.add(button_3);
+	}
+}

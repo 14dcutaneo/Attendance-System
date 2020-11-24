@@ -1,0 +1,257 @@
+import java.awt.BorderLayout;
+import java.awt.Button;
+import java.awt.Color;
+import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.List;
+import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+
+public class extraoptions extends JFrame {
+
+	private JPanel contentPane;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					extraoptions frame = new extraoptions();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public extraoptions() {
+
+
+		
+		setBounds(100, 100, 700, 430);
+		int posX = Main.x/2 - (700/2);
+		int posY = Main.y/2 - (400/2);
+		
+		setBounds(posX,posY,700,430);
+		contentPane = new JPanel();
+		contentPane.setBackground(SystemColor.textHighlight);
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setLayout(new BorderLayout(0, 0));
+		setContentPane(contentPane);
+		
+		JPanel panel = new JPanel();
+		panel.setBackground(Color.ORANGE);
+		contentPane.add(panel, BorderLayout.CENTER);
+		panel.setLayout(null);
+		
+		JLabel lblIsThisPerson = new JLabel("Is This Person");
+		lblIsThisPerson.setForeground(Color.BLACK);
+		lblIsThisPerson.setFont(new Font("Tahoma", Font.PLAIN, 42));
+		lblIsThisPerson.setHorizontalAlignment(SwingConstants.CENTER);
+		lblIsThisPerson.setBounds(0, 10, 639, 43);
+		panel.add(lblIsThisPerson);
+		
+		PrintServ.print("MARKER: " + marker);
+		
+		JButton btnPresent = new JButton("Present");
+		btnPresent.addActionListener(new ActionListener() 
+		{
+			// 0 = Absent unexcused
+			// 1 = Absent excused
+			// 2 = Present
+			// 3 = Late
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				atten = 2;
+				e.overrideStatus(marker, atten);
+				gr.respring();
+				//PrintServ.print("Wtf");
+				try {
+					e.save();
+					new RestartToSaveChanges().setVisible(true);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					//PrintServ.exc.add(e1);
+					new Errors.AMDNCError(
+							Errors.EHAND.Type.THROWN, //TYPE
+							"AttendanceOptions.java "//CLASS
+							+ "AttendanceOptions(Event e, long marker, GetReport gr) "//METHOD
+							+ "btnPresent.ActionListener"//<<EXTRA>>
+							, "Unable to save Event E" //DESCRIPTION
+							);
+					
+				}
+				ao.dispose();
+			}
+		});
+		
+		btnPresent.setForeground(Color.BLACK);
+		btnPresent.setBackground(SystemColor.textHighlight);
+		btnPresent.setFont(new Font("Tahoma", Font.PLAIN, 32));
+		btnPresent.setBounds(180, 271, 262, 56);
+		panel.add(btnPresent);
+		
+		JButton btnLate = new JButton("Late (Unexcused)");
+		btnLate.setForeground(Color.BLACK);
+		btnLate.setBackground(SystemColor.textHighlight);
+		btnLate.setFont(new Font("Tahoma", Font.PLAIN, 32));
+		btnLate.setBounds(21, 194, 286, 56);
+		panel.add(btnLate);
+		btnLate.addActionListener(new ActionListener() 
+		{
+			// 0 = Absent unexcused
+			// 1 = Absent excused
+			// 2 = Present
+			// 3 = Late
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				atten = 3;
+				e.overrideStatus(marker, atten);
+				gr.respring();
+				try {
+					e.save();
+					new RestartToSaveChanges().setVisible(true);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					//PrintServ.exc.add(e1);
+					new Errors.AMDNCError(
+							Errors.EHAND.Type.THROWN, //TYPE
+							"AttendanceOptions.java "//CLASS
+							+ "AttendanceOptions(Event e, long marker, GetReport gr) "//METHOD
+							+ "btnLate.ActionListener"//<<EXTRA>>
+							, "Unable to save Event E" //DESCRIPTION
+							);
+				}
+				ao.dispose();
+			}
+		});
+		
+		JButton btnAbsentexcused = new JButton("Absent (Excused)");
+		btnAbsentexcused.addActionListener(new ActionListener() 
+		{
+			// 0 = Absent unexcused
+			// 1 = Absent excused
+			// 2 = Present
+			// 3 = Late
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				atten = 1;
+				e.overrideStatus(marker, atten);
+				gr.respring();
+				try {
+					e.save();
+					new RestartToSaveChanges().setVisible(true);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					//PrintServ.exc.add(e1);
+					new Errors.AMDNCError(
+							Errors.EHAND.Type.THROWN, //TYPE
+							"AttendanceOptions.java "//CLASS
+							+ "AttendanceOptions(Event e, long marker, GetReport gr) "//METHOD
+							+ "btnAbsentexcused.ActionListener"//<<EXTRA>>
+							, "Unable to save Event E" //DESCRIPTION
+							);
+				}
+				ao.dispose();
+			}
+		});
+		btnAbsentexcused.setForeground(Color.BLACK);
+		btnAbsentexcused.setBackground(SystemColor.textHighlight);
+		btnAbsentexcused.setFont(new Font("Tahoma", Font.PLAIN, 32));
+		btnAbsentexcused.setBounds(317, 97, 322, 56);
+		panel.add(btnAbsentexcused);
+		
+		JButton btnAbsentunexcused = new JButton("Absent (Unexcused)");
+		btnAbsentunexcused.addActionListener(new ActionListener() 
+		{
+			// 0 = Absent unexcused
+			// 1 = Absent excused
+			// 2 = Present
+			// 3 = Late
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				atten = 0;
+				e.overrideStatus(marker, atten);
+				try {
+					e.save();
+					new RestartToSaveChanges().setVisible(true);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					//PrintServ.exc.add(e1);
+					new Errors.AMDNCError(
+							Errors.EHAND.Type.THROWN, //TYPE
+							"AttendanceOptions.java "//CLASS
+							+ "AttendanceOptions(Event e, long marker, GetReport gr) "//METHOD
+							+ "btnAbsentunexcused.ActionListener"//<<EXTRA>>
+							, "Unable to save Event E" //DESCRIPTION
+							);
+				}
+				gr.respring();
+				ao.dispose();
+			}
+		});
+		
+		btnAbsentunexcused.setForeground(Color.BLACK);
+		btnAbsentunexcused.setBackground(SystemColor.textHighlight);
+		btnAbsentunexcused.setFont(new Font("Tahoma", Font.PLAIN, 32));
+		btnAbsentunexcused.setBounds(317, 194, 326, 56);
+		panel.add(btnAbsentunexcused);
+		
+		
+		JButton lateEx = new JButton("Late (Excused)");
+		lateEx.addActionListener(new ActionListener() 
+		{
+			// 0 = Absent unexcused
+			// 1 = Absent excused
+			// 2 = Present
+			// 3 = Late
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				atten = 5;
+				e.overrideStatus(marker, atten);
+				try {
+					e.save();
+					new RestartToSaveChanges().setVisible(true);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					//PrintServ.exc.add(e1);
+					new Errors.AMDNCError(
+							Errors.EHAND.Type.THROWN, //TYPE
+							"AttendanceOptions.java "//CLASS
+							+ "AttendanceOptions(Event e, long marker, GetReport gr) "//METHOD
+							+ "btnAbsentunexcused.ActionListener"//<<EXTRA>>
+							, "Unable to save Event E" //DESCRIPTION
+							);
+				}
+				gr.respring();
+				ao.dispose();
+			}
+		});
+		
+		lateEx.setForeground(Color.BLACK);
+		lateEx.setBackground(SystemColor.textHighlight);
+		lateEx.setFont(new Font("Tahoma", Font.PLAIN, 32));
+		lateEx.setBounds(21, 97, 286, 56);
+		panel.add(lateEx);
+		
+	}
+
+}

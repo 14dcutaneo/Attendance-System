@@ -1,0 +1,12 @@
+import java.awt.image.BufferedImage;
+import com.github.sarxos.webcam.Webcam;
+public class Photo extends Thread
+{
+	long d;
+	Webcam wc;
+	BufferedImage latest;
+	public Photo(long delay)
+	{
+		
+	}
+}

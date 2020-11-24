@@ -1,0 +1,314 @@
+import java.awt.*;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+
+import java.awt.Color;
+import javax.swing.JLabel;
+import java.awt.Font;
+import java.awt.Button;
+import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.awt.event.ActionEvent;
+import java.awt.SystemColor;
+import javax.swing.JOptionPane;
+import java.awt.List;
+
+public class GetReport extends JFrame {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private JPanel contentPane;
+	private JTextField textField;
+	private int buttState = 0;
+	private Button button_3;
+	
+	GetReport g;
+	List list;
+	Event e1;
+	public GetReport(Event e, int state) 
+	{
+		buttState = state;
+		setIconImage(Main.ico);
+		setTitle("FB Marching Band Attendence");
+		e1 = e;
+		g = this;
+		this.setTitle(e.getFriendlyDate());
+		setBounds(100, 100, 920, 787);
+		contentPane = new JPanel();
+		contentPane.setBackground(new Color(30, 144, 255));
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setLayout(new BorderLayout(0, 0));
+		setContentPane(contentPane);
+		
+		JPanel panel = new JPanel();
+		panel.setBackground(Color.ORANGE);
+		contentPane.add(panel, BorderLayout.CENTER);
+		panel.setLayout(null);
+		
+		JLabel lblGetReport = new JLabel("Get Report");
+		lblGetReport.setFont(new Font("Tahoma", Font.PLAIN, 42));
+		lblGetReport.setForeground(Color.BLACK);
+		lblGetReport.setBounds(350, 21, 220, 51);
+		panel.add(lblGetReport);
+		
+		Button button = new Button("Save Report");
+		button.setFont(new Font("Tahoma", Font.PLAIN, 42));
+		button.setBackground(SystemColor.textHighlight);
+		button.setForeground(Color.BLACK);
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				File out = new File(e.saveAs+ buttState + ".txt");
+				try {
+					out.createNewFile();
+					BufferedWriter bw = new BufferedWriter(new FileWriter(out));
+					String addon = "";
+					if (buttState == 0)
+						addon += "all students";
+					if (buttState == 1)
+						addon += "absent, unexcused students";
+					if (buttState == 2)
+						addon += "absent, excused students";
+					if (buttState == 3)
+						addon += "late students";
+					if (buttState == 4)
+						addon += "present students";
+					
+					bw.write("Report for " + addon + " on " + e.getFriendlyDate());
+					bw.newLine();
+					bw.flush();
+					String[] r = list.getItems();
+					
+					for (String s: r)
+					{
+						if (!s.startsWith("Error: Student"))
+						{
+							bw.write(s);
+							bw.newLine();
+							bw.flush();
+						}
+					}
+					bw.write("End of report of " + e.getFriendlyDate());
+					bw.flush();
+					bw.close();
+					
+					Desktop d = Desktop.getDesktop();
+					
+					d.open(out);
+
+					
+					
+					
+					JOptionPane.showMessageDialog(null, "Report saved as: " + e.saveAs + buttState + ".txt");
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					JOptionPane.showMessageDialog(null, "Error Occured, please contact Administrator! <Code: GetReport.java Button.actionPerformed BufferedWriter bw = new Buffered...>");
+				}
+				
+			}
+		});
+		button.setBounds(626, 553, 248, 56);
+		panel.add(button);
+	
+		list = new List();
+		list.setFont(new Font("Times New Roman", Font.BOLD, 30));
+		list.setForeground(Color.BLACK);
+		list.setBounds(10, 78, 864, 468);
+		
+		
+		
+		String[] s = e.beautify();
+		
+		for (int i = 0; i < s.length; i++)
+		{
+			list.add(s[i]);
+		}
+		panel.add(list);
+		
+		Button button_1 = new Button("Edit Person");
+		button_1.setFont(new Font("Tahoma", Font.PLAIN, 42));
+		button_1.setBackground(SystemColor.textHighlight);
+		button_1.setBounds(379, 553, 230, 56);
+		button_1.setForeground(Color.BLACK);
+		panel.add(button_1);
+		button_1.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent ae) 
+			{
+				// 0 = Absent unexcused
+				// 1 = Absent excused
+				// 2 = Present
+				// 3 = Late
+				System.out.println(list.getSelectedIndex());
+				System.out.println(e.beautify()[list.getSelectedIndex()]);
+				
+				AttendanceOptions ao = new 
+						AttendanceOptions(e,
+								
+								e.getMarkerFromString(
+										
+										list.getSelectedItem()
+										
+										).id, 
+								
+								g);
+				
+				
+				ao.setVisible(true);
+				try {
+					System.out.println("HERE");
+					e.save();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					JOptionPane.showMessageDialog(null, "Error Occured, please contact Administrator! <Code: GetReport.java Button_1.actionPerformed e.save>");
+				}
+				System.out.println("Here");
+			}
+		});
+		
+		JLabel lblFindStudent = new JLabel("Find Student:");
+		lblFindStudent.setFont(new Font("Tahoma", Font.PLAIN, 32));
+		lblFindStudent.setForeground(Color.BLACK);
+		lblFindStudent.setBounds(21, 633, 222, 45);
+		panel.add(lblFindStudent);
+		
+		textField = new JTextField();
+		textField.setFont(new Font("Tahoma", Font.PLAIN, 42));
+		textField.setForeground(Color.BLACK);
+		textField.setBounds(226, 620, 648, 63);
+		panel.add(textField);
+		textField.setColumns(10);
+		
+		textField.getDocument().addDocumentListener(new DocumentListener() {
+			  public void changedUpdate(DocumentEvent e) 
+			  {
+				    warn();
+				  }
+				  public void removeUpdate(DocumentEvent e) 
+				  {
+				    warn();
+				  }
+				  public void insertUpdate(DocumentEvent e) 
+				  {
+				    warn();
+				  }
+
+				  public void warn() 
+				  {
+					  filter(textField.getText());
+				  }
+				});
+		
+		button_3 = new Button("View: All");
+		button_3.setForeground(Color.BLACK);
+		button_3.setFont(new Font("Tahoma", Font.PLAIN, 42));
+		button_3.setBackground(SystemColor.textHighlight);
+		button_3.setBounds(10, 553, 350, 56);
+		panel.add(button_3);
+		
+		button_3.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent ae) 
+			{
+				//buttState: Controls state of button_3
+				//buttState = 0 -- View: All
+				//buttState = 1 -- View: Absent [UE]
+				//buttState = 2 -- View: Absent [E]
+				//buttState = 3 -- View: Late
+				//buttState = 4 -- View: Present
+				if (buttState < 4)
+					buttState++;
+				else
+					buttState = 0;
+				String addon = "View: ";
+				if (buttState == 0)
+					addon += "All";
+				if (buttState == 1)
+					addon += "Absent [UE]";
+				if (buttState == 2)
+					addon += "Absent [E]";
+				if (buttState == 3)
+					addon += "Late";
+				if (buttState == 4)
+					addon += "Present";
+				button_3.setLabel(addon);
+				
+				System.out.println(buttState);
+				reList();
+			}
+		});
+		String addon = "View: ";
+		if (buttState == 0)
+			addon += "All";
+		if (buttState == 1)
+			addon += "Absent [UE]";
+		if (buttState == 2)
+			addon += "Absent [E]";
+		if (buttState == 3)
+			addon += "Late";
+		if (buttState == 4)
+			addon += "Present";
+		button_3.setLabel(addon);
+		
+		reList();
+	}
+	
+	private void filter(String str)
+	{
+		str = str.toLowerCase();
+		//list.removeAll();
+		String[] b = list.getItems();
+		for (String str1: b)
+		{
+			String str12 = str1.toLowerCase();
+			if (str12.startsWith(str) || str12.contains(" " + str))
+				list.add(str1);
+		}
+	}
+	
+	private void reList()
+	{
+		//buttState = 0 -- View: All
+		//buttState = 1 -- View: Absent [UE]
+		//buttState = 2 -- View: Absent [E]
+		//buttState = 3 -- View: Late
+		//buttState = 4 -- View: Present
+		list.removeAll();
+		String[] b = e1.beautify();
+		for (String str: b)
+		{
+			if (buttState == 0)
+				list.add(str);
+			else
+				if (buttState == 1 && str.endsWith("Absent (Unexcused)"))
+					list.add(str);
+				else
+					if (buttState == 2 && str.endsWith("Absent (Excused)"))
+						list.add(str);
+					else
+						if (buttState == 3 && str.endsWith("Late"))
+							list.add(str);
+						else
+							if (buttState == 4 && str.endsWith("Present"))
+								list.add(str);
+					
+		}
+	}
+	
+	public void respring()
+	{
+		new GetReport(e1,buttState).setVisible(true);
+		g.dispose();
+	}
+	
+	
+}

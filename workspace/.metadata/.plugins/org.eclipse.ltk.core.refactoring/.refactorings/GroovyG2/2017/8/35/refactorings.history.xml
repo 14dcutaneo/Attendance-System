@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy package &apos;Errors&apos; to &apos;NetHandler/src&apos;&#x0D;&#x0A;- Original project: &apos;GroovyG2&apos;&#x0D;&#x0A;- Destination element: &apos;NetHandler/src&apos;&#x0D;&#x0A;- Original element: &apos;GroovyG2/GroovyG2/src/Errors&apos;" description="Copy package" destination="=NetHandler/src" element1="/GroovyG2\/src&lt;Errors" flags="589830" fragments="1" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyPackages" stamp="1504137402602" version="1.0"/>
+</session>

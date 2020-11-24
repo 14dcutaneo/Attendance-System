@@ -1,0 +1,11 @@
+
+public class And extends Types.CurcuitObj
+{
+
+	@Override
+	public void calculateOutput() 
+	{
+		
+		
+	}
+}

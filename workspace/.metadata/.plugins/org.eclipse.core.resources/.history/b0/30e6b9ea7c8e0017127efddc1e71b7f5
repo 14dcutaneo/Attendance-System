@@ -1,0 +1,24 @@
+import java.applet.Applet;
+import java.awt.Canvas;
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
+public class DisplayPhotos extends Applet
+{
+	BufferedImage dis;
+	Photo getPhotos;
+	public DisplayPhotos() {
+	}
+	public void init()
+	{
+		getPhotos = new Photo(1000,this);
+		setSize(1024,768);
+	}
+	public void paint(Graphics g)
+	{
+		g.drawImage(getPhotos.latest, 0, 0, null);
+	}
+}

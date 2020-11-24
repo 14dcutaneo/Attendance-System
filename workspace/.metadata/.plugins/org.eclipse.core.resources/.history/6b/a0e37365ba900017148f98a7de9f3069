@@ -1,0 +1,43 @@
+
+public class Types 
+{
+	public class CurcuitObj
+	{
+		Types.Input[] input;
+		Types.Output[] output;
+		String Name;
+		public Types.CurcuitObj[][] returnConnections()
+		{
+			int len = 1;
+			if (output.length > input.length)
+				len = output.length;
+			else
+				len = input.length;
+			Types.CurcuitObj[][] ct = new Types.CurcuitObj[2][len];
+			for (int i = 0; i < input.length; i++)
+				ct[0][i] = input[i].Parent;
+			for (int i = 0; i < output.length; i++)
+				ct[0][i] = output[i].Parent;
+			
+			
+		}
+	}
+	public class Input
+	{
+		protected Types.CurcuitObj Parent;
+		protected Types.Output connection;
+		public Input(Types.CurcuitObj cd)
+		{
+			Parent = cd;
+		}
+	}
+	public class Output
+	{
+		protected Types.CurcuitObj Parent;
+		protected Types.Input[] connection;
+		public Output(Types.CurcuitObj cd)
+		{
+			Parent = cd;
+		}
+	}
+}

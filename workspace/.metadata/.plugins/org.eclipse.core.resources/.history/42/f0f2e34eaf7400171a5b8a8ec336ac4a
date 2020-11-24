@@ -1,0 +1,82 @@
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+import java.awt.Font;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
+import java.awt.SystemColor;
+import java.awt.Color;
+import javax.swing.JTextPane;
+
+public class TO_BE_IMPLEMENTED_DeleteConfirmation extends JFrame {
+
+	private JPanel contentPane;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					TO_BE_IMPLEMENTED_DeleteConfirmation frame = new TO_BE_IMPLEMENTED_DeleteConfirmation();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public TO_BE_IMPLEMENTED_DeleteConfirmation() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 700, 400);
+		contentPane = new JPanel();
+		contentPane.setBackground(SystemColor.textHighlight);
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setLayout(new BorderLayout(0, 0));
+		setContentPane(contentPane);
+		
+		JPanel panel = new JPanel();
+		panel.setBackground(Color.ORANGE);
+		contentPane.add(panel, BorderLayout.CENTER);
+		panel.setLayout(null);
+		
+		JLabel lblNotice = new JLabel("Delete Confirmation");
+		lblNotice.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNotice.setFont(new Font("Tahoma", Font.PLAIN, 42));
+		lblNotice.setForeground(Color.RED);
+		lblNotice.setBounds(148, 5, 367, 51);
+		panel.add(lblNotice);
+		
+		JTextPane txtpnAreYouSure = new JTextPane();
+		txtpnAreYouSure.setBackground(Color.ORANGE);
+		txtpnAreYouSure.setFont(new Font("Tahoma", Font.PLAIN, 32));
+		txtpnAreYouSure.setForeground(Color.BLACK);
+		txtpnAreYouSure.setText("Are you sure you would like to delete the report \"INSERT NAME HERE\" ?");
+		txtpnAreYouSure.setBounds(21, 91, 622, 131);
+		panel.add(txtpnAreYouSure);
+		
+		JButton btnOk = new JButton("Yes");
+		btnOk.setBackground(SystemColor.textHighlight);
+		btnOk.setFont(new Font("Tahoma", Font.PLAIN, 42));
+		btnOk.setForeground(Color.BLACK);
+		btnOk.setBounds(168, 257, 141, 41);
+		panel.add(btnOk);
+		
+		JButton btnNo = new JButton("No");
+		btnNo.setForeground(Color.BLACK);
+		btnNo.setFont(new Font("Tahoma", Font.PLAIN, 42));
+		btnNo.setBackground(SystemColor.textHighlight);
+		btnNo.setBounds(348, 257, 141, 41);
+		panel.add(btnNo);
+		
+	}
+}

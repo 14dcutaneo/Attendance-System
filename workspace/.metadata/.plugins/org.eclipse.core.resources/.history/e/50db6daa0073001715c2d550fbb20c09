@@ -1,0 +1,130 @@
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JTextField;
+import java.awt.Color;
+import java.awt.Font;
+import javax.swing.SwingConstants;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JCheckBox;
+import java.awt.SystemColor;
+import javax.swing.UIManager;
+import javax.swing.JLabel;
+import java.awt.List;
+import javax.swing.JPasswordField;
+
+public class SignIn extends JFrame {
+
+	 JPanel contentPane;
+	 JTextField txtEnterName;
+	 JPasswordField passwordField;
+	 List list;
+	 JLabel lblLastSignOn;
+	 JButton btnNewButton;
+	 JButton btnEditRoster;
+	 JButton btnSignIn;
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					SignIn frame = new SignIn();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public SignIn() {
+		setIconImage(Main.ico);
+		setTitle("FB Marching Band Attendence");
+		setBackground(Color.ORANGE);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 920, 700);
+		contentPane = new JPanel();
+		contentPane.setBackground(new Color(30, 144, 255));
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setLayout(new BorderLayout(0, 0));
+		setContentPane(contentPane);
+		
+		JPanel panel = new JPanel();
+		panel.setBackground(Color.ORANGE);
+		contentPane.add(panel, BorderLayout.CENTER);
+		panel.setLayout(null);
+		
+		txtEnterName = new JTextField();
+		txtEnterName.setFont(new Font("Tahoma", Font.PLAIN, 42));
+		txtEnterName.setBounds(152, 21, 573, 61);
+		panel.add(txtEnterName);
+		txtEnterName.setColumns(10);
+		
+		btnNewButton = new JButton("Get Report");
+		btnNewButton.setEnabled(false);
+		btnNewButton.setBackground(SystemColor.textHighlight);
+		btnNewButton.setForeground(Color.BLACK);
+		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 42));
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		btnNewButton.setBounds(604, 465, 246, 61);
+		panel.add(btnNewButton);
+		
+		btnEditRoster = new JButton("Edit Roster");
+		btnEditRoster.setForeground(Color.black);
+		btnEditRoster.setBackground(SystemColor.textHighlight);
+		btnEditRoster.setEnabled(false);
+		btnEditRoster.setFont(new Font("Tahoma", Font.PLAIN, 42));
+		btnEditRoster.setBounds(604, 537, 246, 61);
+		panel.add(btnEditRoster);
+		
+		btnSignIn = new JButton("Sign in");
+		btnSignIn.setForeground(Color.BLACK);
+		btnSignIn.setBackground(SystemColor.textHighlight);
+		btnSignIn.setFont(new Font("Tahoma", Font.PLAIN, 42));
+		btnSignIn.setBounds(251, 383, 374, 61);
+		panel.add(btnSignIn);
+		
+		lblLastSignOn = new JLabel("Last Sign On: Seniors 2018");
+		lblLastSignOn.setHorizontalAlignment(SwingConstants.CENTER);
+		lblLastSignOn.setForeground(Color.BLACK);
+		lblLastSignOn.setFont(new Font("Tahoma", Font.ITALIC, 26));
+		lblLastSignOn.setBounds(10, 334, 849, 45);
+		panel.add(lblLastSignOn);
+		
+		list = new List();
+		list.setFont(new Font("Tahoma", Font.BOLD, 32));
+		list.setBackground(Color.WHITE);
+		list.setBounds(10, 131, 849, 197);
+		panel.add(list);
+		
+		JLabel lblName = new JLabel("Name:");
+		lblName.setFont(new Font("Tahoma", Font.PLAIN, 32));
+		lblName.setBounds(50, 21, 104, 61);
+		panel.add(lblName);
+		
+		passwordField = new JPasswordField();
+		passwordField.setFont(new Font("Tahoma", Font.PLAIN, 42));
+		passwordField.setForeground(Color.BLACK);
+		passwordField.setBounds(169, 500, 410, 45);
+		panel.add(passwordField);
+		
+		JLabel lblPassword = new JLabel("Password:");
+		lblPassword.setForeground(Color.BLACK);
+		lblPassword.setFont(new Font("Tahoma", Font.PLAIN, 32));
+		lblPassword.setBounds(21, 500, 145, 43);
+		panel.add(lblPassword);
+	}
+}
